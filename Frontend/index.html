@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Waste Intelligence System | SCMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="logoutBtn" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+">
+    Logout
+</button>
+
+    <!-- Floating Particles -->
+    <div class="particle" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+    <div class="particle" style="top: 60%; left: 80%; animation-delay: 2s;"></div>
+    <div class="particle" style="top: 30%; left: 50%; animation-delay: 4s;"></div>
+    <div class="particle" style="top: 80%; left: 10%; animation-delay: 6s;"></div>
+    <div class="particle" style="top: 20%; left: 90%; animation-delay: 8s;"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">⚡ E-WASTE AI</div>
+            <div class="subtitle">SCMS School of Engineering & Technology</div>
+            <div class="tagline">Intelligent Classification · Economic Recovery · Sustainable Future</div>
+        </header>
+
+        <div class="main-grid">
+            <!-- Upload Section -->
+            <div class="card">
+                <h2 class="card-title">📸 Upload E-Waste Image</h2>
+                
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📦</div>
+                    <div class="upload-text">Drop your e-waste image here</div>
+                    <div class="upload-hint">or click to browse • JPG, PNG • Max 10MB</div>
+                </div>
+
+                <input type="file" id="imageInput" accept="image/*">
+
+                <div class="image-preview" id="imagePreview">
+                    <button class="remove-image" id="removeImage">×</button>
+                    <img id="previewImg" class="preview-img" alt="Preview">
+                </div>
+
+                <button type="button" class="btn btn-primary" id="analyzeBtn" disabled>
+                    <span>🔍 Analyze E-Waste</span>
+                </button>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing image with AI models...</p>
+                    <p style="font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem;">
+                        Running CNN classification & condition assessment
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="card">
+                <h2 class="card-title">ℹ️ System Information</h2>
+                <p style="color: var(--text-dim); line-height: 1.8; margin-bottom: 1.5rem;">
+                    Our AI-powered system uses deep learning (CNN, MobileNet, ResNet) to classify electronic waste and provide intelligent recycling recommendations with economic value estimation.
+                </p>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-value">98.5%</span>
+                        <span class="stat-label">Accuracy</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value">7+</span>
+                        <span class="stat-label">Categories</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value">&lt;2s</span>
+                        <span class="stat-label">Analysis Time</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value">100%</span>
+                        <span class="stat-label">Eco-Friendly</span>
+                    </div>
+                </div>
+
+                <h3 style="font-family: 'Orbitron', sans-serif; color: var(--primary); margin: 1.5rem 0 1rem; font-size: 1rem;">
+                    Supported Categories
+                </h3>
+                <div>
+                    <span class="tag tag-recyclable">Keyboards</span>
+                    <span class="tag tag-recyclable">Mobile Devices</span>
+                    <span class="tag tag-recyclable">PCBs</span>
+                    <span class="tag tag-refurbish">Cables</span>
+                    <span class="tag tag-hazardous">Batteries</span>
+                    <span class="tag tag-recyclable">Appliances</span>
+                    <span class="tag tag-recyclable">Monitors</span>
+                </div>
+            </div>
+
+                    <!-- Classification Results -->
+            <div class="card results" id="classificationCard">
+                <h2 class="card-title">🎯 Classification Results</h2>
+                
+                <div class="classification-result">
+                    <div class="result-label">Detected Category</div>
+                    <div class="result-value" id="categoryResult">Mobile Device</div>
+
+                    <div class="result-label">Confidence Level</div>
+
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
+                    </div>
+
+                    <div style="margin-top:0.5rem; text-align:right; font-size:0.9rem; color:var(--primary);" id="confidenceText">
+                        95.3%
+                    </div>
+                </div>
+            </div>
+
+    
+
+            <!-- Material Composition -->
+            <div class="card results" id="materialsCard">
+                <h2 class="card-title">⚗️ Material Composition</h2>
+                
+                <div id="materialsList">
+                    <!-- Materials will be dynamically inserted -->
+                </div>
+
+                <div class="value-display">
+                    <div class="value-amount" id="totalValue">₹850</div>
+                    <div class="value-label">Estimated Recovery Value</div>
+                </div>
+
+                <p style="font-size: 0.75rem; color: var(--text-dim); text-align: center; margin-top: 1rem;">
+                    * Based on current market rates and standard composition profiles
+                </p>
+            </div>
+
+            <!-- Recycling Recommendations -->
+            <div class="card results full-width" id="recommendationsCard">
+                <h2 class="card-title">♻️ Recycling Recommendations</h2>
+                
+                <div id="recommendationsList">
+                    <!-- Recommendations will be dynamically inserted -->
+                </div>
+            </div>
+
+            <!-- Environmental Impact -->
+            <div class="card results full-width" id="impactCard">
+                <h2 class="card-title">🌍 Environmental Impact Assessment</h2>
+                
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <div class="impact-icon">💧</div>
+                        <div class="impact-value" id="waterSaved">1,200L</div>
+                        <div class="impact-label">Water Saved</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-icon">🌱</div>
+                        <div class="impact-value" id="co2Reduced">15kg</div>
+                        <div class="impact-label">CO₂ Reduced</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-icon">⚡</div>
+                        <div class="impact-value" id="energySaved">45kWh</div>
+                        <div class="impact-label">Energy Saved</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem; color: var(--text-dim); text-align: center; line-height: 1.6;">
+                    By properly recycling this e-waste, you're contributing to a sustainable future and recovering valuable materials that would otherwise be lost in landfills.
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 SCMS School of Engineering and Technology</p>
+            <p class="team-info">
+                Developed by: Nandana Prakash • Rayyan Fathima • Rishdan Musadik • Mohamed Sanad Sabeer<br>
+                Department of Artificial Intelligence and Data Science • Batch 2023-2027
+            </p>
+            <p style="margin-top: 1rem; font-size: 0.75rem;">
+                Project Guides: Mrs. Anu Joseph • Mrs. Binu John
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+
+    
+</body>
+</html>
